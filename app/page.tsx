@@ -17,44 +17,55 @@ const data = [
   { test: '2学期期末', score: 78 },
 ]
 
+
 const students = [
-  { name: '山田 太郎', grade: '中3', hensachi: 67, risk: '高' },
-  { name: '佐藤 翔', grade: '中2', hensachi: 59, risk: '中' },
-  { name: '高橋 悠', grade: '中1', hensachi: 52, risk: '低' },
-  { name: '鈴木 陸', grade: '高1', hensachi: 71, risk: '低' },
-  { name: '田中 蓮', grade: '中3', hensachi: 63, risk: '中' },
-  { name: '伊藤 優奈', grade: '高2', hensachi: 74, risk: '低' },
-  { name: '渡辺 海', grade: '中2', hensachi: 48, risk: '高' },
-  { name: '小林 陽菜', grade: '中1', hensachi: 56, risk: '中' },
-  { name: '加藤 蒼', grade: '高3', hensachi: 68, risk: '低' },
-  { name: '吉田 美咲', grade: '中3', hensachi: 61, risk: '中' },
+  {
+    name: '山田 太郎',
+    grade: '中3',
+    hensachi: 67,
+    risk: '高',
 
-  { name: '松本 翼', grade: '高1', hensachi: 65, risk: '低' },
-  { name: '井上 結衣', grade: '中2', hensachi: 53, risk: '中' },
-  { name: '木村 陽', grade: '中3', hensachi: 46, risk: '高' },
-  { name: '中村 翔太', grade: '高2', hensachi: 72, risk: '低' },
-  { name: '林 美月', grade: '中1', hensachi: 57, risk: '中' },
-  { name: '清水 大翔', grade: '高3', hensachi: 69, risk: '低' },
-  { name: '山口 彩乃', grade: '中2', hensachi: 51, risk: '中' },
-  { name: '森 悠人', grade: '中3', hensachi: 43, risk: '高' },
-  { name: '池田 さくら', grade: '高1', hensachi: 75, risk: '低' },
-  { name: '橋本 悠真', grade: '中1', hensachi: 54, risk: '中' },
+    scores: [
+      { test: '1学期中間', score: 58 },
+      { test: '1学期期末', score: 64 },
+      { test: '2学期中間', score: 71 },
+      { test: '2学期期末', score: 78 },
+    ]
+  },
 
-  { name: '阿部 美優', grade: '中2', hensachi: 62, risk: '低' },
-  { name: '石川 陽斗', grade: '高2', hensachi: 58, risk: '中' },
-  { name: '前田 凛', grade: '中3', hensachi: 49, risk: '高' },
-  { name: '藤田 翔', grade: '高1', hensachi: 66, risk: '低' },
-  { name: '岡田 結菜', grade: '中1', hensachi: 55, risk: '中' },
-  { name: '長谷川 蓮', grade: '中2', hensachi: 44, risk: '高' },
-  { name: '村上 心', grade: '高3', hensachi: 73, risk: '低' },
-  { name: '近藤 美羽', grade: '中3', hensachi: 60, risk: '中' },
-  { name: '石井 蒼空', grade: '高2', hensachi: 64, risk: '低' },
-  { name: '斎藤 花', grade: '中1', hensachi: 50, risk: '中' },
+  {
+    name: '佐藤 翔',
+    grade: '中2',
+    hensachi: 59,
+    risk: '中',
+
+    scores: [
+      { test: '1学期中間', score: 52 },
+      { test: '1学期期末', score: 55 },
+      { test: '2学期中間', score: 57 },
+      { test: '2学期期末', score: 59 },
+    ]
+  },
+
+  {
+    name: '高橋 悠',
+    grade: '中1',
+    hensachi: 52,
+    risk: '低',
+
+    scores: [
+      { test: '1学期中間', score: 45 },
+      { test: '1学期期末', score: 48 },
+      { test: '2学期中間', score: 51 },
+      { test: '2学期期末', score: 52 },
+    ]
+  },
 ]
+
 
 export default function Home() {
   const [sortType, setSortType] = useState('')
-
+const [selectedStudent, setSelectedStudent] = useState<any>(null)
 const sortedStudents = [...students].sort((a, b) => {
 
   if (sortType === 'hensachi') {
@@ -195,10 +206,11 @@ return order[a.grade as keyof typeof order]
 
 {sortedStudents.map((student, index) => (
 
-    <tr
-      key={index}
-      className="border-b text-sm md:text-base hover:bg-gray-50"
-    >
+ <tr
+  key={index}
+  onClick={() => setSelectedStudent(student)}
+  className="border-b text-sm md:text-base hover:bg-blue-50 cursor-pointer transition"
+>
 
       <td className="py-4">
         {student.name}
@@ -319,7 +331,87 @@ return order[a.grade as keyof typeof order]
         </div>
 
       </div>
+{/* 生徒詳細モーダル */}
+{selectedStudent && (
 
+  <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+
+    <div className="bg-white w-full max-w-2xl rounded-3xl p-6 shadow-2xl relative">
+
+      {/* 閉じる */}
+      <button
+        onClick={() => setSelectedStudent(null)}
+        className="absolute top-4 right-4 text-gray-500 text-xl"
+      >
+        ×
+      </button>
+
+      {/* 名前 */}
+      <h2 className="text-3xl font-bold mb-2">
+        {selectedStudent.name}
+      </h2>
+
+      <p className="text-gray-500 mb-6">
+        {selectedStudent.grade} / 偏差値 {selectedStudent.hensachi}
+      </p>
+
+      {/* グラフ */}
+      <div className="h-72 mb-6">
+
+        <ResponsiveContainer width="100%" height="100%">
+
+          <LineChart data={selectedStudent.scores}>
+
+            <XAxis dataKey="test" />
+
+            <YAxis />
+
+            <Tooltip />
+
+            <Line
+              type="monotone"
+              dataKey="score"
+              stroke="#2563eb"
+              strokeWidth={4}
+            />
+
+          </LineChart>
+
+        </ResponsiveContainer>
+
+      </div>
+
+      {/* AI分析 */}
+      <div className="space-y-4">
+
+        <div className="bg-blue-50 p-4 rounded-2xl">
+          <p className="font-bold mb-2">
+            AI分析
+          </p>
+
+          <p className="text-gray-700">
+            数学の関数分野は安定しています。
+            一方、図形証明でミス傾向があります。
+          </p>
+        </div>
+
+        <div className="bg-red-50 p-4 rounded-2xl">
+          <p className="font-bold mb-2">
+            要注意ポイント
+          </p>
+
+          <p className="text-gray-700">
+            宿題提出率が低下しています。
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+)}
     </main>
   )
 }
