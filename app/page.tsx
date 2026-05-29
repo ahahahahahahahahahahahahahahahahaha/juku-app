@@ -16,6 +16,41 @@ const data = [
   { test: '2学期期末', score: 78 },
 ]
 
+const students = [
+  { name: '山田 太郎', grade: '中3', hensachi: 67, risk: '高' },
+  { name: '佐藤 翔', grade: '中2', hensachi: 59, risk: '中' },
+  { name: '高橋 悠', grade: '中1', hensachi: 52, risk: '低' },
+  { name: '鈴木 陸', grade: '高1', hensachi: 71, risk: '低' },
+  { name: '田中 蓮', grade: '中3', hensachi: 63, risk: '中' },
+  { name: '伊藤 優奈', grade: '高2', hensachi: 74, risk: '低' },
+  { name: '渡辺 海', grade: '中2', hensachi: 48, risk: '高' },
+  { name: '小林 陽菜', grade: '中1', hensachi: 56, risk: '中' },
+  { name: '加藤 蒼', grade: '高3', hensachi: 68, risk: '低' },
+  { name: '吉田 美咲', grade: '中3', hensachi: 61, risk: '中' },
+
+  { name: '松本 翼', grade: '高1', hensachi: 65, risk: '低' },
+  { name: '井上 結衣', grade: '中2', hensachi: 53, risk: '中' },
+  { name: '木村 陽', grade: '中3', hensachi: 46, risk: '高' },
+  { name: '中村 翔太', grade: '高2', hensachi: 72, risk: '低' },
+  { name: '林 美月', grade: '中1', hensachi: 57, risk: '中' },
+  { name: '清水 大翔', grade: '高3', hensachi: 69, risk: '低' },
+  { name: '山口 彩乃', grade: '中2', hensachi: 51, risk: '中' },
+  { name: '森 悠人', grade: '中3', hensachi: 43, risk: '高' },
+  { name: '池田 さくら', grade: '高1', hensachi: 75, risk: '低' },
+  { name: '橋本 悠真', grade: '中1', hensachi: 54, risk: '中' },
+
+  { name: '阿部 美優', grade: '中2', hensachi: 62, risk: '低' },
+  { name: '石川 陽斗', grade: '高2', hensachi: 58, risk: '中' },
+  { name: '前田 凛', grade: '中3', hensachi: 49, risk: '高' },
+  { name: '藤田 翔', grade: '高1', hensachi: 66, risk: '低' },
+  { name: '岡田 結菜', grade: '中1', hensachi: 55, risk: '中' },
+  { name: '長谷川 蓮', grade: '中2', hensachi: 44, risk: '高' },
+  { name: '村上 心', grade: '高3', hensachi: 73, risk: '低' },
+  { name: '近藤 美羽', grade: '中3', hensachi: 60, risk: '中' },
+  { name: '石井 蒼空', grade: '高2', hensachi: 64, risk: '低' },
+  { name: '斎藤 花', grade: '中1', hensachi: 50, risk: '中' },
+]
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-gray-100 p-4 md:p-6">
@@ -87,33 +122,49 @@ export default function Home() {
             </tr>
           </thead>
 
-          <tbody>
+<tbody>
 
-            <tr className="border-b text-sm md:text-base">
-              <td className="py-4">山田 太郎</td>
-              <td>中3</td>
-              <td>67</td>
+  {students.map((student, index) => (
 
-              <td>
-                <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-xs md:text-sm">
-                  高
-                </span>
-              </td>
-            </tr>
+    <tr
+      key={index}
+      className="border-b text-sm md:text-base hover:bg-gray-50"
+    >
 
-            <tr className="border-b text-sm md:text-base">
-              <td className="py-4">佐藤 翔</td>
-              <td>中2</td>
-              <td>59</td>
+      <td className="py-4">
+        {student.name}
+      </td>
 
-              <td>
-                <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs md:text-sm">
-                  中
-                </span>
-              </td>
-            </tr>
+      <td>
+        {student.grade}
+      </td>
 
-          </tbody>
+      <td>
+        {student.hensachi}
+      </td>
+
+      <td>
+
+        <span
+          className={`px-3 py-1 rounded-full text-xs md:text-sm font-semibold
+          ${
+            student.risk === '高'
+              ? 'bg-red-100 text-red-600'
+              : student.risk === '中'
+              ? 'bg-yellow-100 text-yellow-700'
+              : 'bg-green-100 text-green-700'
+          }`}
+        >
+          {student.risk}
+        </span>
+
+      </td>
+
+    </tr>
+
+  ))}
+
+</tbody>
 
         </table>
 
