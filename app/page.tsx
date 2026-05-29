@@ -1,4 +1,5 @@
 'use client'
+import { useState } from 'react'
 
 import {
   LineChart,
@@ -52,6 +53,43 @@ const students = [
 ]
 
 export default function Home() {
+  const [sortType, setSortType] = useState('')
+
+const sortedStudents = [...students].sort((a, b) => {
+
+  if (sortType === 'hensachi') {
+    return b.hensachi - a.hensachi
+  }
+
+  if (sortType === 'grade') {
+
+    const order = {
+      '中1': 1,
+      '中2': 2,
+      '中3': 3,
+      '高1': 4,
+      '高2': 5,
+      '高3': 6,
+    }
+
+return order[a.grade as keyof typeof order]
+  - order[b.grade as keyof typeof order]
+  }
+
+  if (sortType === 'risk') {
+
+    const riskOrder = {
+      '高': 1,
+      '中': 2,
+      '低': 3,
+    }
+
+  return riskOrder[a.risk as keyof typeof riskOrder]
+  - riskOrder[b.risk as keyof typeof riskOrder]
+  }
+
+  return 0
+})
   return (
     <main className="min-h-screen bg-gray-100 p-4 md:p-6">
 
@@ -110,6 +148,37 @@ export default function Home() {
           />
 
         </div>
+        <div className="flex flex-wrap gap-2 mb-4">
+
+  <button
+    onClick={() => setSortType('hensachi')}
+    className="bg-blue-500 text-white px-4 py-2 rounded-xl text-sm"
+  >
+    偏差値順
+  </button>
+
+  <button
+    onClick={() => setSortType('grade')}
+    className="bg-green-500 text-white px-4 py-2 rounded-xl text-sm"
+  >
+    学年順
+  </button>
+
+  <button
+    onClick={() => setSortType('risk')}
+    className="bg-red-500 text-white px-4 py-2 rounded-xl text-sm"
+  >
+    危険度順
+  </button>
+
+  <button
+    onClick={() => setSortType('')}
+    className="bg-gray-500 text-white px-4 py-2 rounded-xl text-sm"
+  >
+    リセット
+  </button>
+
+</div>
 
         <table className="w-full min-w-[500px]">
 
@@ -124,7 +193,7 @@ export default function Home() {
 
 <tbody>
 
-  {students.map((student, index) => (
+{sortedStudents.map((student, index) => (
 
     <tr
       key={index}
