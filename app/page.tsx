@@ -18,30 +18,42 @@ const data = [
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gray-100 p-6">
-      
-      <h1 className="text-3xl font-bold mb-6">
+    <main className="min-h-screen bg-gray-100 p-4 md:p-6">
+
+      {/* タイトル */}
+      <h1 className="text-2xl md:text-4xl font-bold mb-6">
         塾管理ダッシュボード
       </h1>
 
       {/* 上部カード */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
 
         <div className="bg-white rounded-2xl p-5 shadow">
-          <p className="text-gray-500">在籍生徒数</p>
-          <h2 className="text-4xl font-bold mt-2">142</h2>
+          <p className="text-gray-500 text-sm">
+            在籍生徒数
+          </p>
+
+          <h2 className="text-3xl md:text-4xl font-bold mt-2">
+            142
+          </h2>
         </div>
 
         <div className="bg-white rounded-2xl p-5 shadow">
-          <p className="text-gray-500">要注意生徒</p>
-          <h2 className="text-4xl font-bold text-red-500 mt-2">
+          <p className="text-gray-500 text-sm">
+            要注意生徒
+          </p>
+
+          <h2 className="text-3xl md:text-4xl font-bold text-red-500 mt-2">
             8
           </h2>
         </div>
 
         <div className="bg-white rounded-2xl p-5 shadow">
-          <p className="text-gray-500">未提出宿題</p>
-          <h2 className="text-4xl font-bold text-orange-500 mt-2">
+          <p className="text-gray-500 text-sm">
+            未提出宿題
+          </p>
+
+          <h2 className="text-3xl md:text-4xl font-bold text-orange-500 mt-2">
             12
           </h2>
         </div>
@@ -49,23 +61,25 @@ export default function Home() {
       </div>
 
       {/* 生徒一覧 */}
-      <div className="bg-white rounded-2xl p-6 shadow mb-6">
+      <div className="bg-white rounded-2xl p-4 md:p-6 shadow mb-6 overflow-x-auto">
 
-        <div className="flex justify-between mb-4">
-          <h2 className="text-2xl font-bold">
+        <div className="flex flex-col md:flex-row md:justify-between gap-4 mb-4">
+
+          <h2 className="text-xl md:text-2xl font-bold">
             生徒一覧
           </h2>
 
           <input
-            className="border rounded-xl px-4 py-2"
+            className="border rounded-xl px-4 py-2 w-full md:w-64"
             placeholder="生徒検索"
           />
+
         </div>
 
-        <table className="w-full">
+        <table className="w-full min-w-[500px]">
 
           <thead>
-            <tr className="text-left border-b">
+            <tr className="text-left border-b text-sm md:text-base">
               <th className="py-3">名前</th>
               <th>学年</th>
               <th>偏差値</th>
@@ -75,56 +89,64 @@ export default function Home() {
 
           <tbody>
 
-            <tr className="border-b">
+            <tr className="border-b text-sm md:text-base">
               <td className="py-4">山田 太郎</td>
               <td>中3</td>
               <td>67</td>
+
               <td>
-                <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full">
+                <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-xs md:text-sm">
                   高
                 </span>
               </td>
             </tr>
 
-            <tr className="border-b">
+            <tr className="border-b text-sm md:text-base">
               <td className="py-4">佐藤 翔</td>
               <td>中2</td>
               <td>59</td>
+
               <td>
-                <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">
+                <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs md:text-sm">
                   中
                 </span>
               </td>
             </tr>
 
           </tbody>
+
         </table>
 
       </div>
 
-      {/* 生徒詳細 */}
-      <div className="grid grid-cols-2 gap-6">
+      {/* 下部 */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
         {/* グラフ */}
-        <div className="bg-white rounded-2xl p-6 shadow">
+        <div className="bg-white rounded-2xl p-4 md:p-6 shadow">
 
-          <h2 className="text-2xl font-bold mb-4">
+          <h2 className="text-xl md:text-2xl font-bold mb-4">
             成績推移
           </h2>
 
-          <div className="h-72">
+          <div className="h-64 md:h-72">
 
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={data}>
+
                 <XAxis dataKey="test" />
+
                 <YAxis />
+
                 <Tooltip />
+
                 <Line
                   type="monotone"
                   dataKey="score"
                   stroke="#2563eb"
                   strokeWidth={3}
                 />
+
               </LineChart>
             </ResponsiveContainer>
 
@@ -133,9 +155,9 @@ export default function Home() {
         </div>
 
         {/* AI分析 */}
-        <div className="bg-white rounded-2xl p-6 shadow">
+        <div className="bg-white rounded-2xl p-4 md:p-6 shadow">
 
-          <h2 className="text-2xl font-bold mb-4">
+          <h2 className="text-xl md:text-2xl font-bold mb-4">
             AI学習分析
           </h2>
 
@@ -146,7 +168,7 @@ export default function Home() {
                 数学
               </p>
 
-              <p className="text-gray-700 mt-2">
+              <p className="text-gray-700 mt-2 text-sm md:text-base">
                 関数は理解できていますが、
                 図形証明に苦手傾向があります。
               </p>
@@ -157,7 +179,7 @@ export default function Home() {
                 注意
               </p>
 
-              <p className="text-gray-700 mt-2">
+              <p className="text-gray-700 mt-2 text-sm md:text-base">
                 宿題提出率が2週間低下しています。
               </p>
             </div>
@@ -167,7 +189,7 @@ export default function Home() {
                 推奨アクション
               </p>
 
-              <p className="text-gray-700 mt-2">
+              <p className="text-gray-700 mt-2 text-sm md:text-base">
                 面談実施を推奨します。
               </p>
             </div>
